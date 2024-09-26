@@ -27,20 +27,22 @@ stock_data = StockData('sp_400_midcap.csv', '662166cb8e3d13.57537943')
 
 with st.expander("View Close Price Time Series"):
     price_df = stock_data.fetch_stock(ticker=ticker, period='d', start=start_date, end=end_date)
-    price_df['date'] = pd.DataFrame(price_df['date'])
-    price_df.set_index('date', inplace=True)
+    if price_df.empty:
+        st.error("No data for {ticker} in time range {start_date} to {end_date}")
+    else:
+        price_df['date'] = pd.DataFrame(price_df['date'])
+        price_df.set_index('date', inplace=True)
 
-    fig, ax = plt.subplots(figsize=(10, 6))
+        fig, ax = plt.subplots(figsize=(10, 6))
 
-    fig, ax = plt.subplots(figsize=(10, 6))
-    ax.plot(price_df['close'], label='Close Price', color='blue')
-    ax.set_title('Close Price Time Series')
-    ax.set_xlabel('Date')
-    ax.set_ylabel('Close Price')
-    ax.grid(True)
-    plt.xticks(rotation=45)
-    ax.legend()
-    plt.tight_layout()
+        fig, ax = plt.subplots(figsize=(10, 6))
+        ax.plot(price_df['close'], label='Close Price', color='blue')
+        ax.set_title('Close Price Time Series')
+        ax.set_xlabel('Date')
+        ax.set_ylabel('Close Price')
+        plt.xticks(rotation=45)
+        ax.legend()
+        plt.tight_layout()
 
-    st.pyplot(fig)
+        st.pyplot(fig)
 
