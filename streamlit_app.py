@@ -31,7 +31,7 @@ with st.expander("View Close Price Time Series"):
     if price_df.empty:
         st.error("No data for {ticker} in time range {start_date} to {end_date}")
     else:
-        price_df['date'] = pd.DataFrame(price_df['date'])
+        price_df['date'] = pd.to_datetime(price_df['date'])
         price_df.set_index('date', inplace=True)
 
         fig, ax = plt.subplots(figsize=(10, 6))
