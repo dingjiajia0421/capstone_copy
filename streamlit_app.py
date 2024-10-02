@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 from stock_data import StockData
 
 st.title('Bloomberg Capstone Project: time series anomaly detection')
@@ -40,6 +41,10 @@ with st.expander("View Close Price Time Series"):
         ax.set_title('Close Price Time Series')
         ax.set_xlabel('Date')
         ax.set_ylabel('Close Price')
+
+        ax.xaxis.set_major_locator(mdates.AutoDateLocator())
+        ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
+        
         plt.xticks(rotation=45)
         ax.legend()
         plt.tight_layout()
